@@ -2,13 +2,16 @@ package com.aiwadev.notifintro
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.TaskStackBuilder
 import com.aiwadev.notifintro.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -26,11 +29,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(bind.root)
         createNotification()
 
+        //Creating a pending intent
+        val notifIntent = Intent(this, MainActivity::class.java)
+        val pendingIntent = TaskStackBuilder.create(this).run {
+            addNextIntentWithParentStack(notifIntent)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("My First Notification")
                 .setContentText("This is my awesome notification, i know it is a bit...")
                 .setSmallIcon(R.drawable.ic_function)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent)
                 .build()
 
         val notifManager = NotificationManagerCompat.from(this)
