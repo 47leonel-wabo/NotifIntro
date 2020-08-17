@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NotifIntro</string>
+    <string name="notif_text">Launch Notification</string>
+    <string name="hello_text">Hello Notifications !</string>
 </resources>
